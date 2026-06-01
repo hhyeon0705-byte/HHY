@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실습 2: 댓글 추가/삭제</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            padding: 30px;
+        }
+        ul {
+            list-style-type: none; /* 기본 불릿 제거 */
+            padding: 0;
+        }
+        li {
+            background-color: #f1f1f1;
+            margin: 5px 0;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            cursor: pointer; /* 클릭 가능하다는 표시 */
+        }
+        li:hover {
+            background-color: #ffdddd; /* 마우스 올리면 삭제 경고색 */
+        }
+        /* 클릭 시 삭제 안내 툴팁 효과 (CSS 가상요소 활용) */
+        li:hover::after {
+            content: " (클릭하여 삭제)";
+            color: red;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        // 댓글 추가 함수
+        function addComment() {
+            // 1. 사용자 입력 받기
+            var inputStr = prompt("추가할 댓글 내용을 입력하세요:", "오늘 수업 너무 재밌어요!");
+
+            // 취소 버튼을 누르거나 내용이 없으면 종료
+            if (inputStr == null || inputStr.trim() == "") {
+                return; 
+            }
+
+            // 2. 부모 요소(ul) 찾기
+            var parent = document.getElementById("commentList");
+
+            // 3. 새로운 요소(li) 생성 및 내용 채우기
+            var newLi = document.createElement("li");
+            newLi.innerHTML = inputStr;
+
+            // 4. 클릭 시 삭제되는 이벤트 리스너 등록 (핵심!)
+            newLi.onclick = function() {
+                // this는 클릭된 자기 자신(li)을 의미함
+                var p = this.parentElement; // 부모(ul) 찾기
+                p.removeChild(this);        // 부모에게서 나를 떼어내기(삭제)
+            };
+
+            // 5. 트리에 추가 (Append)
+            parent.appendChild(newLi);
+        }
+    </script>
+</head>
+<body onload="addComment()"> 
+    <!-- 페이지 로드 시 자동으로 한 번 실행되게 하여 가이드라인 충족 -->
+
+    <h3>실습 2: 댓글 추가/삭제 프로그램</h3>
+    <p>아래 목록을 클릭하면 해당 항목이 삭제됩니다.</p>
+    <hr>
+
+    <button onclick="addComment()">+ 댓글 추가하기</button>
+
+    <!-- 댓글이 들어갈 목록 -->
+    <ul id="commentList">
+        <!-- 자바스크립트로 여기에 li가 추가됩니다 -->
+    </ul>
+
+</body>
+</html>
