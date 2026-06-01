@@ -32,6 +32,15 @@
         button:hover {
             background-color: #ddd;
         }
+        /* 원상복구 버튼을 돋보이게 할 특별 스타일 (선택사항) */
+        .btn-reset {
+            background-color: #f44336;
+            color: white;
+            border: 1px solid #d32f2f;
+        }
+        .btn-reset:hover {
+            background-color: #da190b;
+        }
     </style>
     <script>
         // 1. 글자색 변경 함수
@@ -57,12 +66,23 @@
             var obj = document.getElementById("target");
             
             // 현재 display 속성 값을 확인
-            // 주의: 스타일이 인라인으로 설정되지 않은 초기 상태는 빈 문자열("")일 수 있음
             if (obj.style.display === "none") {
                 obj.style.display = "block";
             } else {
                 obj.style.display = "none";
             }
+        }
+
+        // 5. 🌟 추가된 원상복구 함수
+        function resetStyle() {
+            var obj = document.getElementById("target");
+            
+            // 자바스크립트로 가했던 인라인 스타일 속성들을 빈 문자열로 초기화합니다.
+            // 이렇게 하면 상단 CSS의 원래 기본 스타일(#target)로 되돌아갑니다.
+            obj.style.color = "";
+            obj.style.fontSize = "";
+            obj.style.backgroundColor = "";
+            obj.style.display = "block"; // 숨겨진 상태일 수도 있으므로 보이게 처리합니다.
         }
     </script>
 </head>
@@ -71,16 +91,16 @@
     <h3>실습 1: DOM 스타일 제어하기</h3>
     <hr>
 
-    <!-- 변경 대상 문장 -->
     <p id="target">이 문장의 스타일을 바꿔보세요!</p>
 
     <br>
 
-    <!-- 제어 버튼들 -->
     <button onclick="changeColor()">글자색 변경</button>
     <button onclick="changeSize()">크게 보기</button>
     <button onclick="changeBackground()">배경 강조</button>
     <button onclick="toggleVisibility()">숨기기/보이기</button>
+    
+    <button onclick="resetStyle()" class="btn-reset">원상복구</button>
 
 </body>
 </html>
