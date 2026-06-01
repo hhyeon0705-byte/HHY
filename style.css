@@ -1,112 +1,179 @@
 @import url('https://fonts.googleapis.com/css2?family=Dongle:wght@400;700&family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@400;600&display=swap');
 
 :root {
-  --primary: #a1c4fd;       
-  --primary-dark: #76a5af;  
-  --bg: #f0f4f8;            
-  --text: #3c4858;          
+  /* 쨍하고 청량한 하늘색 (이미지 컬러 참고) */
+  --primary: #00a8e8;       
+  --primary-dark: #008bc0;  
+  --bg: #e6f7ff; /* 아주 연한 파스텔 하늘색 배경 */
+  --text: #333333;          
+  --white: #ffffff;
 }
 
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: "Gowun Dodum", "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+  font-family: "Gowun Dodum", "Segoe UI", Roboto, sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
+/* 헤더: 쨍한 파란 바탕에 흰색 굵은 글씨 */
 header {
-  padding: 2.5rem 1rem;
+  padding: 3rem 1rem 4rem;
   text-align: center;
-  background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); 
-  color: #333333; 
-}
-header h1 {
-  font-weight: 700;
-  margin: 0;
-}
-header .subtitle { 
-  margin-top: .5rem; 
-  opacity: .85; 
-  font-weight: 600;
+  background: var(--primary);
+  color: var(--white);
+  /* 지붕 느낌을 주기 위해 하단을 둥글게 처리 */
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  box-shadow: 0 4px 15px rgba(0, 168, 232, 0.3);
 }
 
+header h1 {
+  font-family: 'Dongle', sans-serif;
+  font-weight: 700;
+  font-size: 5rem; /* 둥글고 굵은 폰트를 큼직하게 배치 */
+  margin: 0;
+  line-height: 0.8;
+  letter-spacing: 2px;
+}
+
+header .subtitle { 
+  margin-top: 1rem; 
+  opacity: 0.9; 
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* 네비게이션: 독립된 둥근 버튼들로 귀엽게 배치 */
 nav {
-  background: #b0d4de; 
   display: flex;
   gap: 1rem;
-  padding: .75rem 1rem;
+  padding: 0 1rem;
   justify-content: center;
   flex-wrap: wrap;
-}
-nav a {
-  color: #4a5568; 
-  text-decoration: none;
-  font-weight: 600;
-  padding: .25rem .5rem;
-  transition: color 0.2s;
-}
-nav a:hover { 
-  color: #000000;
-  text-decoration: underline; 
+  margin-top: -25px; /* 헤더 위로 살짝 걸치게 끌어올림 */
+  position: relative;
+  z-index: 10;
 }
 
+nav a {
+  background: var(--white);
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 700;
+  padding: 0.6rem 1.5rem;
+  border-radius: 25px; /* 완전히 둥근 캡슐 형태 */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+nav a:hover { 
+  background: var(--primary);
+  color: var(--white);
+  transform: translateY(-5px); /* 마우스 올리면 통통 튀어오름 */
+  box-shadow: 0 8px 15px rgba(0, 168, 232, 0.4);
+}
+
+/* 본문 컨테이너: 하얀 집 같은 박스 */
 .container {
   max-width: 900px;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  background: #ffffff;
-  border-radius: 12px; 
-  box-shadow: 0 4px 12px rgba(161, 196, 253, 0.15); 
+  margin: 3rem auto;
+  padding: 2.5rem;
+  background: var(--white);
+  border-radius: 24px; 
+  box-shadow: 0 10px 30px rgba(0, 168, 232, 0.08); 
 }
 
-section { margin-bottom: 1rem; }
 h1, h2, h3 { 
-  margin: .2rem 0 .6rem;
-  color: #2c3e50; 
+  font-family: 'Dongle', sans-serif;
+  font-size: 3rem;
+  margin: 0.5rem 0 1rem;
+  color: var(--primary-dark);
+  line-height: 1;
 }
 
 .contact-form {
   display: grid;
   grid-template-columns: 1fr;
-  gap: .5rem;
+  gap: 1rem;
   margin-top: 1rem;
 }
+
 input, textarea {
   width: 100%;
-  padding: .6rem;
-  border: 1px solid #cfe2fe; 
-  border-radius: 8px; 
+  padding: 0.8rem;
+  border: 2px solid #b3e5fc; 
+  border-radius: 12px; 
   font: inherit;
-  background-color: #fbfcfd;
+  background-color: #fafdfc;
+  transition: border-color 0.3s;
 }
+
 input:focus, textarea:focus {
-  outline: 2px solid var(--primary); 
+  outline: none;
+  border-color: var(--primary); 
 }
 
 button {
-  padding: .6rem .8rem;
+  padding: 0.8rem 1.2rem;
   border: none;
-  border-radius: 8px; 
+  border-radius: 12px; 
   background: var(--primary);
-  color: #333; 
+  color: var(--white); 
   cursor: pointer;
   font-weight: 600;
-  transition: background 0.2s;
+  font-size: 1.1rem;
+  transition: all 0.2s;
 }
+
 button:hover { 
-  background: #8cb4f5; 
+  background: var(--primary-dark); 
+  transform: scale(1.05);
 }
 
 footer {
   text-align: center;
-  padding: 2rem 1rem;
-  color: #8a9ba8;
+  padding: 3rem 1rem;
+  color: #76a5af;
+  font-family: 'Dongle', sans-serif;
+  font-size: 1.8rem;
 }
 
-@media (max-width: 600px) {
-  header h1 { font-size: 1.25rem; }
-  .container { margin: 1rem; padding: .75rem; }
+/* =========================================
+   ✨ JS 애니메이션을 위한 유틸리티 클래스
+   ========================================= */
+
+/* 1. 통통 튀는 바운스 효과 */
+.anim-bounce {
+  animation: bounce 0.5s ease-out;
+}
+
+/* 2. 스르륵 나타나는 페이드인 효과 */
+.anim-fade-in {
+  animation: fadeIn 1s ease-in forwards;
+}
+
+/* 3. 아래에서 위로 올라오며 나타나는 슬라이드 업 */
+.anim-slide-up {
+  animation: slideUp 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  to { opacity: 1; transform: translateY(0); }
 }
