@@ -1,71 +1,146 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>실습 2: 키보드 자동차</title>
-    <style>
-        body {
-            height: 100vh;
-            /* 스크롤바가 생기지 않도록 설정 */
-            overflow: hidden; 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>광운대 캠퍼스 길찾기 - 인터넷활용 실습</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .game-container {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      height: 600px;
+      margin: 20px auto;
+      background-image: url('image_e2bc99.jpg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: #f0f4f8;
+      border: 2px solid #cfe2fe;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(161, 196, 253, 0.15);
+    }
+    #car {
+      position: absolute; 
+      left: 420px;        
+      top: 520px;         
+      width: 60px; 
+      height: 30px;
+      background-color: #a1c4fd;
+      border: 2px solid #194c98;
+      border-radius: 6px;
+      color: #333; 
+      font-weight: bold; 
+      text-align: center; 
+      line-height: 26px;
+      font-size: 11px;
+      transition: all 0.05s linear;
+      z-index: 10;
+    }
+    #info {
+      margin-top: 15px;
+      padding: 10px; 
+      background: #fbfcfd; 
+      border: 1px solid #cfe2fe;
+      border-radius: 8px;
+      display: inline-block;
+      font-size: 14px;
+    }
+    .building-tip {
+      position: absolute;
+      background: rgba(25, 76, 152, 0.85);
+      color: white;
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: bold;
+      pointer-events: none;
+    }
+  </style>
+  <script>
+    var x = 420;
+    var y = 520;
+    var step = 15; 
+
+    window.onload = function() {
+      var car = document.getElementById("car");
+      var info = document.getElementById("info");
+
+      document.onkeydown = function(e) {
+        switch(e.keyCode) {
+          case 37: 
+            if (x - step >= 0) x -= step;
+            break;
+          case 38: 
+            if (y - step >= 0) y -= step;
+            break;
+          case 39: 
+            if (x + step <= 840) x += step;
+            break;
+          case 40: 
+            if (y + step <= 570) y += step;
+            break;
         }
 
-        #car {
-            position: absolute; /* 절대 위치 지정 (필수) */
-            left: 100px;        /* 초기 x좌표 */
-            top: 100px;         /* 초기 y좌표 */
-            width: 80px; height: 40px;
-            background-color: violet;
-            border: 2px solid black;
-            color: white; font-weight: bold; text-align: center; line-height: 40px;
+        car.style.left = x + "px";
+        car.style.top = y + "px";
+
+        if (x >= 400 && x <= 460 && y >= 250 && y <= 310) {
+          info.innerHTML = "🏫 [도착] 80주년기념관 / 중앙도서관 앞에 도착했습니다!";
+        } else if (x >= 630 && x <= 710 && y >= 260 && y <= 330) {
+          info.innerHTML = "🎭 [도착] 노천극장 부근을 지나고 있습니다.";
+        } else if (x >= 650 && x <= 720 && y >= 340 && y <= 400) {
+          info.innerHTML = "💻 [도착] 새빛관에 도착했습니다!";
+        } else if (x >= 540 && x <= 600 && y >= 400 && y <= 470) {
+          info.innerHTML = "🧪 [도착] 참빛관 / 다산재 부근입니다.";
+        } else if (x >= 400 && x <= 460 && y >= 500) {
+          info.innerHTML = "📍 정문(서울선곡초등학교 건너편)에서 출발합니다.";
+        } else {
+          info.innerHTML = "🏃 캠퍼스를 탐색 중입니다... (x: " + x + ", y: " + y + ")";
         }
-        
-        #info {
-            position: fixed;
-            bottom: 20px; left: 20px;
-            padding: 10px; background: #eee; border: 1px solid #aaa;
-        }
-    </style>
-    <script>
-        var x = 100;
-        var y = 100;
-        var step = 10; // 이동 거리
-
-        window.onload = function() {
-            var car = document.getElementById("car");
-            var info = document.getElementById("info");
-
-            document.onkeydown = function(e) {
-                // 37:왼쪽, 38:위, 39:오른쪽, 40:아래
-                switch(e.keyCode) {
-                    case 37: // [왼쪽] 제한 없이 이동
-                        x -= step;
-                        break;
-                    case 38: // [위쪽] 제한 없이 이동
-                        y -= step;
-                        break;
-                    case 39: // [오른쪽] 제한 없이 이동
-                        x += step;
-                        break;
-                    case 40: // [아래쪽] 제한 없이 이동
-                        y += step;
-                        break;
-                }
-
-                // 변경된 좌표를 실제 DOM 요소에 적용
-                car.style.left = x + "px";
-                car.style.top = y + "px";
-
-                // 좌표 정보 출력
-                info.innerHTML = "현재 좌표 (x, y) = (" + x + ", " + y + ")";
-            }
-        }
-    </script>
+      }
+    }
+  </script>
 </head>
 <body>
-    <h3>실습 2: 키보드 자동차</h3>
-    <p>방향키(←, ↑, →, ↓)를 눌러 자유롭게 운전해보세요.</p>
-    <div id="car">Car</div>
-    <div id="info">현재 좌표 (x, y) = (100, 100)</div>
+
+<header>
+  <h1>이름: 현혜연</h1>
+  <p class="subtitle">한 줄 소개: 광운대학교 26학번</p>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="portfolio.html">Portfolio</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<main class="container">
+  <section>
+    <h2>실습: 키보드 이벤트를 활용한 캠퍼스 맵 탐색</h2>
+    <p>방향키(←, ↑, →, ↓)를 눌러 정문에서 출발해 중앙도서관, 새빛관을 찾아가 보세요!</p>
+    <hr>
+
+    <div class="game-container">
+      <div id="car">현혜연</div>
+      
+      <div class="building-tip" style="top: 260px; left: 450px;">80주년기념관</div>
+      <div class="building-tip" style="top: 350px; left: 670px;">새빛관</div>
+      <div class="building-tip" style="top: 280px; left: 650px;">노천극장</div>
+      <div class="building-tip" style="top: 410px; left: 550px;">참빛관</div>
+    </div>
+
+    <div id="info">📍 정문(서울선곡초등학교 건너편)에서 출발합니다.</div>
+  </section>
+</main>
+
+<footer>
+  <small>&copy; <span id="year"></span> 이름: 현혜연</small>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
