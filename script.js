@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     overlay.innerHTML = '<svg class="house-icon" viewBox="0 0 24 24" fill="white"><path d="M12 3L2 12h3v8h14v-8h3L12 3z"/></svg>';
     document.body.appendChild(overlay);
 
-    // 3. 페이지가 열릴 때 오버레이가 위로 걷어지며 화면이 나타나는 효과
+    // 3. 페이지가 열릴 때 오버레이가 밑으로 내려가며 화면이 나타나는 효과
     // 약간의 딜레이를 주어야 브라우저가 애니메이션을 인식합니다.
     setTimeout(function() {
         overlay.classList.add('leaving');
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // 링크 즉시 이동을 막음
             e.preventDefault(); 
             
-            // 오버레이가 아래에서 올라와 화면을 덮음
+            // 오버레이가 위에서 밑으로 내려와 화면을 덮음
             overlay.classList.remove('leaving');
             overlay.classList.add('active');
 
