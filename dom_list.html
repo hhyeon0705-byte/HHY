@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>인터넷활용 실습 포트폴리오</title>
+    <title>댓글 추천 시스템 - 인터넷활용 실습</title>
     <link rel="stylesheet" href="style.css">
     
     <style>
@@ -11,24 +11,6 @@
             padding: 10px;
         }
         
-        /* --- 실습 1: DOM 스타일 제어 CSS --- */
-        #input-box { margin-bottom: 20px; }
-        #text-input {
-            padding: 10px; font-size: 16px; width: 70%; max-width: 400px;
-            border: 2px solid #b3e5fc; border-radius: 8px;
-        }
-        #target {
-            font-size: 20px; font-weight: bold; padding: 30px;
-            border: 2px dashed #00a8e8; border-radius: 12px;
-            margin: 20px auto; width: 90%; transition: all 0.3s; 
-            white-space: pre-wrap; word-break: break-all;
-            background-color: #fafdfc; text-align: center;
-        }
-        .dom-controls { text-align: center; }
-        .dom-controls button { margin: 5px; }
-        .btn-reset { background-color: #ff5252; }
-        .btn-reset:hover { background-color: #d32f2f; }
-
         /* --- 실습 2: 댓글 시스템 CSS --- */
         ul { list-style-type: none; padding: 0; margin-top: 20px; }
         li {
@@ -56,35 +38,6 @@
     </style>
     
     <script>
-        // --- 실습 1: DOM 스타일 제어 자바스크립트 ---
-        function updateText() {
-            var inputVal = document.getElementById("text-input").value;
-            var obj = document.getElementById("target");
-            if (inputVal.trim() === "") {
-                obj.innerText = "이 문장의 스타일을 바꿔보세요!";
-            } else {
-                obj.innerText = inputVal;
-            }
-        }
-        function changeColor() { document.getElementById("target").style.color = "#ff4081"; }
-        function changeSize() { document.getElementById("target").style.fontSize = "32px"; }
-        function changeBackground() { document.getElementById("target").style.backgroundColor = "#fff9c4"; }
-        function toggleVisibility() {
-            var obj = document.getElementById("target");
-            if (obj.style.display === "none") {
-                obj.style.display = "block";
-            } else {
-                obj.style.display = "none";
-            }
-        }
-        function resetStyle() {
-            var obj = document.getElementById("target");
-            document.getElementById("text-input").value = "";
-            obj.innerText = "이 문장의 스타일을 바꿔보세요!";
-            obj.style.color = ""; obj.style.fontSize = "";
-            obj.style.backgroundColor = ""; obj.style.display = "block"; 
-        }
-
         // --- 실습 2: 댓글 시스템 자바스크립트 ---
         function addComment() {
             var inputStr = prompt("추가할 댓글 내용을 입력하세요:", "오늘 수업 너무 재밌어요!");
@@ -127,8 +80,8 @@
 <body>
 
 <header>
-    <h1>HHY PORTFOLIO</h1>
-    <p class="subtitle"> 광운대학교 26학번</p>
+    <h1>이름: 현혜연</h1>
+    <p class="subtitle">한 줄 소개: 광운대학교 26학번</p>
 </header>
 
 <nav>
@@ -139,28 +92,6 @@
 </nav>
 
 <main class="container portfolio-section">
-    
-    <section>
-        <h2>실습 1: DOM 스타일 제어하기</h2>
-        <p>입력창에 글을 쓰고 아래 버튼들을 눌러 스타일을 조작해 보세요.</p>
-        <hr style="border:0; height:1px; background:#cfe2fe; margin-bottom:20px;">
-
-        <div id="input-box" style="text-align: center;">
-            <input type="text" id="text-input" oninput="updateText()" placeholder="원하는 문장을 입력하세요">
-        </div>
-        <p id="target">이 문장의 스타일을 바꿔보세요!</p>
-
-        <div class="dom-controls">
-            <button onclick="changeColor()">글자색 변경</button>
-            <button onclick="changeSize()">크게 보기</button>
-            <button onclick="changeBackground()">배경 강조</button>
-            <button onclick="toggleVisibility()">숨기기/보이기</button>
-            <button onclick="resetStyle()" class="btn-reset">원상복구</button>
-        </div>
-    </section>
-
-    <hr style="border: 0; border-top: 2px dashed #cfe2fe; margin: 50px 0;">
-
     <section>
         <h2>실습 2: 댓글 추가/삭제 및 추천 프로그램</h2>
         <p>댓글을 추가하고 좋아요, 싫어요 기능과 삭제 기능을 개별적으로 조작해 보세요.</p>
@@ -171,7 +102,6 @@
         <ul id="commentList">
             </ul>
     </section>
-
 </main>
 
 <footer>
