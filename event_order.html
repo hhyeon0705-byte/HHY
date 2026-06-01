@@ -1,98 +1,234 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>실습 1: 스마트 피자 주문서</title>
-    <style>
-        /* 메뉴 박스 테두리 스타일 (fieldset 대체) */
-        #menu_box {
-            border: 1px solid black;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-        }
-    </style>
-    <script>
-        /* 기능 1: 가격 계산 함수 */
-        function recalc() {
-            var total = 0; 
-            var checks = document.getElementsByClassName("menu-check");
-            var qtys = document.getElementsByClassName("menu-qty");
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>스마트 피자 주문서 - 인터넷활용 실습</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .menu-category {
+      border: 1px solid #cfe2fe;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      background-color: #fbfcfd;
+    }
+    .menu-category h4 {
+      margin: 0 0 10px 0;
+      color: #194c98;
+    }
+    .menu-item {
+      margin: 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .menu-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 6px;
+      object-fit: cover;
+      border: 1px solid #ddd;
+    }
+    .menu-details {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-grow: 1;
+    }
+  </style>
+  <script>
+    function recalc() {
+      var total = 0; 
+      var checks = document.getElementsByClassName("menu-check");
+      var qtys = document.getElementsByClassName("menu-qty");
 
-            for (var i = 0; i < checks.length; i++) {
-                if (checks[i].checked) { 
-                    var price = parseInt(checks[i].value);
-                    var quantity = parseInt(qtys[i].value);
-                    
-                    if (isNaN(quantity) || quantity < 1) {
-                        quantity = 1;
-                    }
-                    total += price * quantity;
-                }
-            }
-            document.getElementById("total").value = total;
+      for (var i = 0; i < checks.length; i++) {
+        if (checks[i].checked) { 
+          var price = parseInt(checks[i].value);
+          var quantity = parseInt(qtys[i].value);
+          
+          if (isNaN(quantity) || quantity < 1) {
+            quantity = 1;
+          }
+          total += price * quantity;
         }
+      }
+      document.getElementById("total").value = total;
+    }
 
-        /* 기능 2: 주소 입력 확인 */
-        function checkAddress() {
-            var addr = document.getElementById("addr");
-            if (addr.value == "") {
-                alert("배달 받으실 주소를 반드시 입력해주세요!");
-                addr.focus();
-            }
-        }
+    function checkAddress() {
+      var addr = document.getElementById("addr");
+      if (addr.value == "") {
+        alert("배달 받으실 주소를 반드시 입력해주세요!");
+        addr.focus();
+      }
+    }
 
-        /* 기능 3: 주문 전송 제어 */
-        function validate(e) {
-            var total = parseInt(document.getElementById("total").value);
-            
-            if (total == 0) {
-                alert("상품을 적어도 하나는 선택해야 주문 가능합니다.");
-                e.preventDefault(); 
-                return false;
-            }
+    function validate(e) {
+      var total = parseInt(document.getElementById("total").value);
+      var addr = document.getElementById("addr");
 
-            alert("주문이 완료되었습니다! (총 결제금액: " + total + "원)");
-            e.preventDefault(); 
-            return false; 
-        }
-    </script>
+      if (addr.value == "") {
+        alert("배달 받으실 주소를 반드시 입력해주세요!");
+        addr.focus();
+        e.preventDefault();
+        return false;
+      }
+      
+      if (total == 0) {
+        alert("상품을 적어도 하나는 선택해야 주문 가능합니다.");
+        e.preventDefault(); 
+        return false;
+      }
+
+      alert("주문이 완료되었습니다! (총 결제금액: " + total + "원)");
+      e.preventDefault(); 
+      return false; 
+    }
+  </script>
 </head>
 <body>
-    <h3>피자 주문서 (이벤트 활용)</h3>
+
+<header>
+  <h1>이름: 현혜연</h1>
+  <p class="subtitle">한 줄 소개: 광운대학교 26학번</p>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="portfolio.html">Portfolio</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<main class="container">
+  <section>
+    <h2>실습: 이미지 포함 스마트 주문서</h2>
     <hr>
     
     <form action="#" onsubmit="return validate(event)">
-        
-        <div id="menu_box">
-            <h4>[메뉴 선택]</h4>
-            
-            <div>
-                <input type="checkbox" class="menu-check" value="15000" onchange="recalc()"> 콤비네이션 피자 (15,000원)
-                <input type="number" class="menu-qty" value="1" min="1" style="width: 40px;" onchange="recalc()" onkeyup="recalc()"> 개
-            </div>
-            <div>
-                <input type="checkbox" class="menu-check" value="12000" onchange="recalc()"> 페퍼로니 피자 (12,000원)
-                <input type="number" class="menu-qty" value="1" min="1" style="width: 40px;" onchange="recalc()" onkeyup="recalc()"> 개
-            </div>
-            <div>
-                <input type="checkbox" class="menu-check" value="2000" onchange="recalc()"> 치즈 토핑 추가 (2,000원)
-                <input type="number" class="menu-qty" value="1" min="1" style="width: 40px;" onchange="recalc()" onkeyup="recalc()"> 개
-            </div>
-            <div>
-                <input type="checkbox" class="menu-check" value="1500" onchange="recalc()"> 콜라 1.25L (1,500원)
-                <input type="number" class="menu-qty" value="1" min="1" style="width: 40px;" onchange="recalc()" onkeyup="recalc()"> 개
-            </div>
+      
+      <div class="menu-category">
+        <h4>[1. 메인 메뉴 - 피자]</h4>
+        <div class="menu-item">
+          <input type="checkbox" class="menu-check" value="15000" onchange="recalc()">
+          <img src="combination.jpg" alt="콤비네이션 피자" class="menu-img">
+          <div class="menu-details">
+            <span>콤비네이션 피자 (15,000원)</span>
+            <input type="number" class="menu-qty" value="1" min="1" style="width: 50px;" onchange="recalc()" onkeyup="recalc()"> 개
+          </div>
         </div>
+        <div class="menu-item">
+          <input type="checkbox" class="menu-check" value="12000" onchange="recalc()">
+          <img src="pepperoni.jpg" alt="페퍼로니 피자" class="menu-img">
+          <div class="menu-details">
+            <span>페퍼로니 피자 (12,000원)</span>
+            <input type="number" class="menu-qty" value="1" min="1" style="width: 50px;" onchange="recalc()" onkeyup="recalc()"> 개
+          </div>
+        </div>
+        <div class="menu-item">
+          <input type="checkbox" class="menu-check" value="16000" onchange="recalc()">
+          <img src="sweetpotato.jpg" alt="고구마 피자" class="menu-img">
+          <div class="menu-details">
+            <span>고구마 무스 피자 (16,000원)</span>
+            <input type="number" class="menu-qty" value="1" min="1" style="width: 50px;" onchange="recalc()" onkeyup="recalc()"> 개
+          </div>
+        </div>
+        <div class="menu-item">
+          <input type="checkbox" class="menu-check" value="18000" onchange="recalc()">
+          <img src="bulgogi.jpg" alt="불고기 피자" class="menu-img">
+          <div class="menu-details">
+            <span>불고기 바베큐 피자 (18,000원)</span>
+            <input type="number" class="menu-qty" value="1" min="1" style="width: 50px;" onchange="recalc()" onkeyup="recalc()"> 개
+          </div>
+        </div>
+      </div>
 
-        배달 주소: <input type="text" id="addr" size="50" onblur="checkAddress()" placeholder="주소를 입력하세요">
-        <br><br>
+      <div class="menu-category">
+        <h4>[2. 사이드 메뉴]</h4>
+        <div class="menu-item">
+          <input type="checkbox" class="menu-check" value="5000" onchange="recalc()">
+          <img src="spaghetti.jpg" alt="스파게티" class="menu-img">
+          <div class="menu-details">
+            <span>치즈 오븐 스파게티 (5,000원)</span>
+            <input type="number" class="menu-qty" value="1" min="1" style="width: 50px;" onchange="recalc()" onkeyup="recalc()"> 개
+          </div>
+        </div>
+        <div class="menu-item">
+          <input type="checkbox" class="menu-check" value="4000" onchange="recalc()">
+          <img src="wings.jpg" alt="버팔로 윙" class="menu-img">
+          <div class="menu-details">
+            <span>버팔로 윙 (4개) (4,000원)</span>
+            <input type="number" class="menu-qty" value="1" min="1" style="width: 50px;" onchange="recalc()" onkeyup="recalc()"> 개
+          </div>
+        </div>
+        <div class="menu-item">
+          <input type="checkbox" class="menu-check" value="3000" onchange="recalc()">
+          <img src="fries.jpg" alt="감자튀김" class="menu-img">
+          <div class="menu-details">
+            <span>감자튀김 (3,000원)</span>
+            <input type="number" class="menu-qty" value="1" min="1" style="width: 50px;" onchange="recalc()" onkeyup="recalc()"> 개
+          </div>
+        </div>
+        <div class="menu-item">
+          <input type="checkbox" class="menu-check" value="2000" onchange="recalc()">
+          <img src="topping.jpg" alt="치즈 토핑" class="menu-img">
+          <div class="menu-details">
+            <span>치즈 토핑 추가 (2,000원)</span>
+            <input type="number" class="menu-qty" value="1" min="1" style="width: 50px;" onchange="recalc()" onkeyup="recalc()"> 개
+          </div>
+        </div>
+      </div>
 
-        주문 합계: <input type="text" id="total" value="0" readonly> 원
-        <br><br>
+      <div class="menu-category">
+        <h4>[3. 음료 및 디저트]</h4>
+        <div class="menu-item">
+          <input type="checkbox" class="menu-check" value="1500" onchange="recalc()">
+          <img src="cola.jpg" alt="콜라" class="menu-img">
+          <div class="menu-details">
+            <span>콜라 1.25L (1,500원)</span>
+            <input type="number" class="menu-qty" value="1" min="1" style="width: 50px;" onchange="recalc()" onkeyup="recalc()"> 개
+          </div>
+        </div>
+        <div class="menu-item">
+          <input type="checkbox" class="menu-check" value="1500" onchange="recalc()">
+          <img src="cider.jpg" alt="사이다" class="menu-img">
+          <div class="menu-details">
+            <span>사이다 1.25L (1,500원)</span>
+            <input type="number" class="menu-qty" value="1" min="1" style="width: 50px;" onchange="recalc()" onkeyup="recalc()"> 개
+          </div>
+        </div>
+        <div class="menu-item">
+          <input type="checkbox" class="menu-check" value="2000" onchange="recalc()">
+          <img src="zerocola.jpg" alt="제로콜라" class="menu-img">
+          <div class="menu-details">
+            <span>제로 콜라 1.25L (2,000원)</span>
+            <input type="number" class="menu-qty" value="1" min="1" style="width: 50px;" onchange="recalc()" onkeyup="recalc()"> 개
+          </div>
+        </div>
+      </div>
 
-        <input type="submit" value="주문하기">
-        <input type="reset" value="초기화" onclick="setTimeout(recalc, 0)">
+      <p>
+        배달 주소: <input type="text" id="addr" onblur="checkAddress()" placeholder="주소를 입력하세요" style="width: 80%; max-width: 400px;">
+      </p>
+
+      <p>
+        주문 합계: <input type="text" id="total" value="0" readonly style="width: 100px; text-align: right;"> 원
+      </p>
+      <br>
+
+      <button type="submit">주문하기</button>
+      <button type="reset" onclick="setTimeout(recalc, 0)" style="background-color: #76a5af;">초기화</button>
     </form>
+  </section>
+</main>
+
+<footer>
+  <small>&copy; <span id="year"></span> 이름: 현혜연</small>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
