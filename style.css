@@ -1,34 +1,40 @@
-/* =============================================================
-   색상 테마는 "여기"에서 바꿉니다. (파랑 계열 기본)
-   원하는 색상 코드로 아래 4가지만 바꿔보세요.
-   ------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@400;700&family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@400;600&display=swap');
+
 :root {
-  --primary: #1e5bb8;      /* 메인 포인트 색상 */
-  --primary-dark: #194c98; /* 호버/진한 포인트 */
-  --bg: #f7f9fc;           /* 전체 배경 색 */
-  --text: #222222;         /* 본문 글자 색 */
+  --primary: #a1c4fd;       
+  --primary-dark: #76a5af;  
+  --bg: #f0f4f8;            
+  --text: #3c4858;          
 }
-/* ============================================================= */
 
 * { box-sizing: border-box; }
+
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;
+  font-family: "Gowun Dodum", "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
 }
 
 header {
-  padding: 2rem 1rem;
+  padding: 2.5rem 1rem;
   text-align: center;
-  background: var(--primary);
-  color: #ffffff;
+  background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); 
+  color: #333333; 
 }
-header .subtitle { margin-top: .25rem; opacity: .95; }
+header h1 {
+  font-weight: 700;
+  margin: 0;
+}
+header .subtitle { 
+  margin-top: .5rem; 
+  opacity: .85; 
+  font-weight: 600;
+}
 
 nav {
-  background: var(--primary-dark);
+  background: #b0d4de; 
   display: flex;
   gap: 1rem;
   padding: .75rem 1rem;
@@ -36,24 +42,31 @@ nav {
   flex-wrap: wrap;
 }
 nav a {
-  color: #ffffff;
+  color: #4a5568; 
   text-decoration: none;
   font-weight: 600;
   padding: .25rem .5rem;
+  transition: color 0.2s;
 }
-nav a:hover { text-decoration: underline; }
+nav a:hover { 
+  color: #000000;
+  text-decoration: underline; 
+}
 
 .container {
   max-width: 900px;
-  margin: 1.5rem auto;
-  padding: 1rem;
+  margin: 2rem auto;
+  padding: 1.5rem;
   background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  border-radius: 12px; 
+  box-shadow: 0 4px 12px rgba(161, 196, 253, 0.15); 
 }
 
 section { margin-bottom: 1rem; }
-h1, h2, h3 { margin: .2rem 0 .6rem; }
+h1, h2, h3 { 
+  margin: .2rem 0 .6rem;
+  color: #2c3e50; 
+}
 
 .contact-form {
   display: grid;
@@ -64,25 +77,33 @@ h1, h2, h3 { margin: .2rem 0 .6rem; }
 input, textarea {
   width: 100%;
   padding: .6rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  border: 1px solid #cfe2fe; 
+  border-radius: 8px; 
   font: inherit;
+  background-color: #fbfcfd;
 }
+input:focus, textarea:focus {
+  outline: 2px solid var(--primary); 
+}
+
 button {
   padding: .6rem .8rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px; 
   background: var(--primary);
-  color: #fff;
+  color: #333; 
   cursor: pointer;
   font-weight: 600;
+  transition: background 0.2s;
 }
-button:hover { background: var(--primary-dark); }
+button:hover { 
+  background: #8cb4f5; 
+}
 
 footer {
   text-align: center;
   padding: 2rem 1rem;
-  color: #666;
+  color: #8a9ba8;
 }
 
 @media (max-width: 600px) {
