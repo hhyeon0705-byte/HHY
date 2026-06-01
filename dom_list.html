@@ -3,65 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>실습 2: 댓글 추천 시스템</title>
+    <title>인터넷활용 실습 포트폴리오</title>
+    <link rel="stylesheet" href="style.css">
+    
     <style>
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            padding: 30px;
+        .portfolio-section {
+            padding: 10px;
         }
-        ul {
-            list-style-type: none; 
-            padding: 0;
-        }
-        li {
-            background-color: #f1f1f1;
-            margin: 8px 0;
-            padding: 12px;
-            border-bottom: 1px solid #ccc;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 4px;
-        }
-        .comment-text {
-            font-size: 16px;
-            flex-grow: 1;
-            word-break: break-all;
-        }
-        .btn-group {
-            display: flex;
-            gap: 5px;
-            flex-shrink: 0;
-        }
-        .btn-group button {
-            padding: 4px 8px;
-            font-size: 13px;
-            cursor: pointer;
-            border-radius: 3px;
-            border: 1px solid #ccc;
-            background-color: #fff;
-        }
-        .btn-like:hover { background-color: #e3f2fd; color: #2196f3; }
-        .btn-dislike:hover { background-color: #ffebee; color: #f44336; }
-        .btn-del:hover { background-color: #eeeeee; color: #333; }
         
-        .btn-main {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+        /* --- 실습 1: DOM 스타일 제어 CSS --- */
+        #input-box { margin-bottom: 20px; }
+        #text-input {
+            padding: 10px; font-size: 16px; width: 70%; max-width: 400px;
+            border: 2px solid #b3e5fc; border-radius: 8px;
         }
+        #target {
+            font-size: 20px; font-weight: bold; padding: 30px;
+            border: 2px dashed #00a8e8; border-radius: 12px;
+            margin: 20px auto; width: 90%; transition: all 0.3s; 
+            white-space: pre-wrap; word-break: break-all;
+            background-color: #fafdfc; text-align: center;
+        }
+        .dom-controls { text-align: center; }
+        .dom-controls button { margin: 5px; }
+        .btn-reset { background-color: #ff5252; }
+        .btn-reset:hover { background-color: #d32f2f; }
+
+        /* --- 실습 2: 댓글 시스템 CSS --- */
+        ul { list-style-type: none; padding: 0; margin-top: 20px; }
+        li {
+            background-color: #fafdfc; margin: 10px 0; padding: 15px;
+            border: 1px solid #cfe2fe; display: flex;
+            justify-content: space-between; align-items: center;
+            border-radius: 12px; box-shadow: 0 2px 5px rgba(0, 168, 232, 0.05);
+        }
+        .comment-text { font-size: 16px; flex-grow: 1; word-break: break-all; color: #333; }
+        .btn-group { display: flex; gap: 6px; flex-shrink: 0; }
+        .btn-group button {
+            padding: 6px 10px; font-size: 13px; cursor: pointer;
+            border-radius: 6px; border: 1px solid #b3e5fc;
+            background-color: #ffffff; transition: all 0.2s; color: #3c4858;
+        }
+        .btn-like:hover { background-color: #e6f7ff; color: #00a8e8; border-color: #00a8e8; }
+        .btn-dislike:hover { background-color: #ffebee; color: #f44336; border-color: #f44336; }
+        .btn-del:hover { background-color: #f1f1f1; color: #333; }
+        .btn-main {
+            padding: 10px 20px; font-size: 16px; background-color: #00a8e8;
+            color: white; border: none; border-radius: 8px; cursor: pointer;
+            font-family: 'Gowun Dodum', sans-serif; font-weight: 600;
+        }
+        .btn-main:hover { background-color: #008bc0; }
     </style>
+    
     <script>
+        // --- 실습 1: DOM 스타일 제어 자바스크립트 ---
+        function updateText() {
+            var inputVal = document.getElementById("text-input").value;
+            var obj = document.getElementById("target");
+            if (inputVal.trim() === "") {
+                obj.innerText = "이 문장의 스타일을 바꿔보세요!";
+            } else {
+                obj.innerText = inputVal;
+            }
+        }
+        function changeColor() { document.getElementById("target").style.color = "#ff4081"; }
+        function changeSize() { document.getElementById("target").style.fontSize = "32px"; }
+        function changeBackground() { document.getElementById("target").style.backgroundColor = "#fff9c4"; }
+        function toggleVisibility() {
+            var obj = document.getElementById("target");
+            if (obj.style.display === "none") {
+                obj.style.display = "block";
+            } else {
+                obj.style.display = "none";
+            }
+        }
+        function resetStyle() {
+            var obj = document.getElementById("target");
+            document.getElementById("text-input").value = "";
+            obj.innerText = "이 문장의 스타일을 바꿔보세요!";
+            obj.style.color = ""; obj.style.fontSize = "";
+            obj.style.backgroundColor = ""; obj.style.display = "block"; 
+        }
+
+        // --- 실습 2: 댓글 시스템 자바스크립트 ---
         function addComment() {
             var inputStr = prompt("추가할 댓글 내용을 입력하세요:", "오늘 수업 너무 재밌어요!");
-
-            if (inputStr == null || inputStr.trim() == "") {
-                return; 
-            }
+            if (inputStr == null || inputStr.trim() == "") return; 
 
             var parent = document.getElementById("commentList");
             var newLi = document.createElement("li");
@@ -74,49 +101,83 @@
             btnGroup.className = "btn-group";
 
             var btnLike = document.createElement("button");
-            btnLike.className = "btn-like";
-            btnLike.innerHTML = "👍 0";
+            btnLike.className = "btn-like"; btnLike.innerHTML = "👍 0";
             btnLike.onclick = function() {
                 var count = parseInt(this.innerHTML.replace("👍 ", ""));
                 this.innerHTML = "👍 " + (count + 1);
             };
 
             var btnDislike = document.createElement("button");
-            btnDislike.className = "btn-dislike";
-            btnDislike.innerHTML = "👎 0";
+            btnDislike.className = "btn-dislike"; btnDislike.innerHTML = "👎 0";
             btnDislike.onclick = function() {
                 var count = parseInt(this.innerHTML.replace("👎 ", ""));
                 this.innerHTML = "👎 " + (count + 1);
             };
 
             var btnDelete = document.createElement("button");
-            btnDelete.className = "btn-del";
-            btnDelete.innerHTML = "❌ 삭제";
-            btnDelete.onclick = function() {
-                parent.removeChild(newLi);
-            };
+            btnDelete.className = "btn-del"; btnDelete.innerHTML = "❌ 삭제";
+            btnDelete.onclick = function() { parent.removeChild(newLi); };
 
-            btnGroup.appendChild(btnLike);
-            btnGroup.appendChild(btnDislike);
-            btnGroup.appendChild(btnDelete);
-
-            newLi.appendChild(textSpan);
-            newLi.appendChild(btnGroup);
-
+            btnGroup.appendChild(btnLike); btnGroup.appendChild(btnDislike); btnGroup.appendChild(btnDelete);
+            newLi.appendChild(textSpan); newLi.appendChild(btnGroup);
             parent.appendChild(newLi);
         }
     </script>
 </head>
-<body onload="addComment()"> 
+<body>
 
-    <h3>실습 2: 댓글 추가/삭제 및 추천 프로그램</h3>
-    <p>댓글을 추가하고 좋아요, 싫어요 기능과 삭제 기능을 개별적으로 조작해 보세요.</p>
-    <hr>
+<header>
+    <h1>이름: 현혜연</h1>
+    <p class="subtitle">한 줄 소개: 광운대학교 26학번</p>
+</header>
 
-    <button onclick="addComment()" class="btn-main">+ 댓글 추가하기</button>
+<nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="contact.html">Contact</a>
+</nav>
 
-    <ul id="commentList">
-    </ul>
+<main class="container portfolio-section">
+    
+    <section>
+        <h2>실습 1: DOM 스타일 제어하기</h2>
+        <p>입력창에 글을 쓰고 아래 버튼들을 눌러 스타일을 조작해 보세요.</p>
+        <hr style="border:0; height:1px; background:#cfe2fe; margin-bottom:20px;">
 
+        <div id="input-box" style="text-align: center;">
+            <input type="text" id="text-input" oninput="updateText()" placeholder="원하는 문장을 입력하세요">
+        </div>
+        <p id="target">이 문장의 스타일을 바꿔보세요!</p>
+
+        <div class="dom-controls">
+            <button onclick="changeColor()">글자색 변경</button>
+            <button onclick="changeSize()">크게 보기</button>
+            <button onclick="changeBackground()">배경 강조</button>
+            <button onclick="toggleVisibility()">숨기기/보이기</button>
+            <button onclick="resetStyle()" class="btn-reset">원상복구</button>
+        </div>
+    </section>
+
+    <hr style="border: 0; border-top: 2px dashed #cfe2fe; margin: 50px 0;">
+
+    <section>
+        <h2>실습 2: 댓글 추가/삭제 및 추천 프로그램</h2>
+        <p>댓글을 추가하고 좋아요, 싫어요 기능과 삭제 기능을 개별적으로 조작해 보세요.</p>
+        <hr style="border: 0; height: 1px; background: #cfe2fe; margin-bottom: 20px;">
+
+        <button onclick="addComment()" class="btn-main">+ 댓글 추가하기</button>
+
+        <ul id="commentList">
+            </ul>
+    </section>
+
+</main>
+
+<footer>
+    <small>&copy; <span id="year"></span> 이름: 현혜연</small>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
