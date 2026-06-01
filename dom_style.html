@@ -10,7 +10,17 @@
             text-align: center;
             padding: 50px;
         }
-        /* 타겟 문장 기본 스타일 */
+        #input-box {
+            margin-bottom: 20px;
+        }
+        #text-input {
+            padding: 10px;
+            font-size: 16px;
+            width: 50%;
+            max-width: 400px;
+            border: 1px solid #999;
+            border-radius: 5px;
+        }
         #target {
             font-size: 20px;
             font-weight: bold;
@@ -18,7 +28,9 @@
             border: 2px solid #ccc;
             margin: 20px auto;
             width: 80%;
-            transition: all 0.3s; /* 부드러운 전환 효과 */
+            transition: all 0.3s; 
+            white-space: pre-wrap;
+            word-break: break-all;
         }
         button {
             padding: 10px 15px;
@@ -32,7 +44,6 @@
         button:hover {
             background-color: #ddd;
         }
-        /* 원상복구 버튼을 돋보이게 할 특별 스타일 (선택사항) */
         .btn-reset {
             background-color: #f44336;
             color: white;
@@ -43,29 +54,34 @@
         }
     </style>
     <script>
-        // 1. 글자색 변경 함수
+        function updateText() {
+            var inputVal = document.getElementById("text-input").value;
+            var obj = document.getElementById("target");
+            
+            if (inputVal.trim() === "") {
+                obj.innerText = "이 문장의 스타일을 바꿔보세요!";
+            } else {
+                obj.innerText = inputVal;
+            }
+        }
+
         function changeColor() {
             var obj = document.getElementById("target");
             obj.style.color = "red";
         }
 
-        // 2. 글자 크기 변경 함수 (32px)
         function changeSize() {
             var obj = document.getElementById("target");
             obj.style.fontSize = "32px";
         }
 
-        // 3. 배경색 변경 함수 (Yellow)
         function changeBackground() {
             var obj = document.getElementById("target");
             obj.style.backgroundColor = "yellow";
         }
 
-        // 4. 숨기기/보이기 토글 함수
         function toggleVisibility() {
             var obj = document.getElementById("target");
-            
-            // 현재 display 속성 값을 확인
             if (obj.style.display === "none") {
                 obj.style.display = "block";
             } else {
@@ -73,14 +89,17 @@
             }
         }
 
-        
         function resetStyle() {
             var obj = document.getElementById("target");
-    
+            var inputObj = document.getElementById("text-input");
+            
+            inputObj.value = "";
+            obj.innerText = "이 문장의 스타일을 바꿔보세요!";
+            
             obj.style.color = "";
             obj.style.fontSize = "";
             obj.style.backgroundColor = "";
-            obj.style.display = "block"; // 숨겨진 상태일 수도 있으므로 보이게 처리합니다.
+            obj.style.display = "block"; 
         }
     </script>
 </head>
@@ -88,6 +107,10 @@
 
     <h3>실습 1: DOM 스타일 제어하기</h3>
     <hr>
+
+    <div id="input-box">
+        <input type="text" id="text-input" oninput="updateText()" placeholder="원하는 문장을 입력하세요">
+    </div>
 
     <p id="target">이 문장의 스타일을 바꿔보세요!</p>
 
@@ -97,7 +120,6 @@
     <button onclick="changeSize()">크게 보기</button>
     <button onclick="changeBackground()">배경 강조</button>
     <button onclick="toggleVisibility()">숨기기/보이기</button>
-    
     <button onclick="resetStyle()" class="btn-reset">원상복구</button>
 
 </body>
